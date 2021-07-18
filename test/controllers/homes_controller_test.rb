@@ -2,7 +2,7 @@ require 'test_helper'
 
 class HomesControllerTest < ActionDispatch::IntegrationTest
   test "should get main" do
-    get homes_main_url
+    get root_path
     assert_response :success
   end
 
