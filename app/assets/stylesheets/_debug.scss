@@ -1,0 +1,10 @@
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 80%;
+  margin: 45px 45px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  @include box-sizing;
+}
