@@ -5,6 +5,13 @@ class UsersController < ApplicationController
   end
 
   def create
+    @user = User.new(user_params)
+    if @user.save
+      flash[:success] = "登録することができました"
+    else
+      render "new"
+      flash.now[:notice] = "登録できませんでした"
+    end
   end
 
   def show
