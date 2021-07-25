@@ -1,0 +1,19 @@
+= form_with(model: @user, local: true) do |f|
+
+  = f.label :名前
+  = display_requirement(@user)
+  = f.text_field :name, class: 'form-conttrol'
+
+  = f.label :メールアドレス
+  = display_requirement(@user)
+  = f.email_field :email, class: 'form-control'
+
+  = f.label :パスワード
+  = display_requirement(@user)
+  = f.password_field :password, class: 'form-control'
+
+  = f.label :確認用パスワード
+  = display_requirement(@user)
+  = f.password_field :password_confirmation, class: 'form-control'
+  
+  = f.submit yield(:button_text), class: "btn btn-primary"
