@@ -12,4 +12,11 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  include ApplicationHelper
+
+  class ActionDispatch::IntegrationTest
+    def setup
+      @user = users(:okinawa)
+    end
+  end
 end

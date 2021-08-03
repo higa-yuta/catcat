@@ -1,0 +1,8 @@
+-if @user.errors.present?
+  %div#error_explantion
+    %div.alert.alert-error
+      #{@user.errors.count}件のエラーがあります。
+    
+    %ul
+    -@user.errors.full_messages.each do |message|
+      %li.error_msg #{message}

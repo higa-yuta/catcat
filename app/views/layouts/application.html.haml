@@ -2,11 +2,17 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Catcat
+    %title
+      = select_title(yield(:title))
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   %body
+    = render "shared/header"
+    %div.container
+      - flash.each do |message_type, message|
+        %div{ class: "alert alert-#{message_type}"}
+          #{message}
     = yield
     = debug(params) if Rails.env.development?
