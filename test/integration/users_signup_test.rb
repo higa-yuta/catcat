@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class UsersSignupTest < ActionDispatch::IntegrationTest
+
+  test "Routing test" do
+    assert_generates '/users/1', { controller: 'users', action: 'show', id: '1'}
+  end
   
   test "invalid signup information" do
     get signup_path
