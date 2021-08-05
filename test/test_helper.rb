@@ -14,6 +14,11 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   include ApplicationHelper
 
+  # テストユーザーがログインしている場合はtrueを返す
+  def is_logged_in?
+    !session[:user_id].nil?
+  end
+
   class ActionDispatch::IntegrationTest
     def setup
       @user = users(:okinawa)
