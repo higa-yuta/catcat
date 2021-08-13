@@ -5,8 +5,14 @@ module SessionsHelper
   end
 
   def current_user
-    if session[:user_id]
-      @current_user ||= User.find_by(id: session[:user_id])
+    if (user_id = session[:user_id])  
+      @current_user ||= User.find_by(id: user_id)
+    elsif (user_id = cookies.signed[:user_id])
+      user = User.find_by(id: user_id)
+      if user&.authenticate?(cookies.signed[:remember_token])
+        log_in user
+        @current_user = user
+      end
     end
   end
 
@@ -14,8 +20,40 @@ module SessionsHelper
     !current_user.nil?
   end
 
+  # セッションを永続化する
+  def remember(user)
+    user.remember
+    cookies.permanent.signed[:user_id] = user.id
+    cookies.permanent[:remember_token] = user.remember_token
+  end
+
+  # 一時セッション、永続セッションを破棄する
   def log_out
+    forget(current_user)
     session.delete(:user_id)
     @current_user = nil
   end
+
+  # 永続セッションを破棄する
+  def forget(user)
+    user.forget
+    cookies.delete(:user_id)
+    cookies.delete(:remember_token)
+  end
+
+  # 永続セッションを保持している場合、ログインする
+  # before_action
+  # application_controller.rb
+  def auto_login
+    if (user_id = cookies.signed[:user_id])
+      user = User.find_by(id: user_id)
+      if user&.authenticate?(cookies[:remember_token])
+        log_in user
+        redirect_to user
+      else
+        redirect_to login_path
+      end
+    end
+  end
+
 end
