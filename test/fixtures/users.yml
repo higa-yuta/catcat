@@ -2,4 +2,5 @@ okinawa:
   name: 沖縄　太郎
   email: okinawa@gmail.com
   password_digest: <%= User.digest('password') %>
+  
   admin: true

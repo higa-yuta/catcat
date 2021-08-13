@@ -23,4 +23,10 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
 
+  test "can't auto-login when user hold worng cookies[:remember_token]" do
+    cookies[:remember_token] = User.new_token
+    byebug
+    assert_not logged_in?
+  end
+
 end

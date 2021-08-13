@@ -89,4 +89,10 @@ class UserTest < ActiveSupport::TestCase
     @user.save
     assert_equal @user.email, "okinawa@gmail.com"
   end
+
+
+  test "authenticate? should return false for a user with nil digest" do
+    @user.remember_digest = nil
+    assert_not @user.authenticate?(@user.remember_token)
+  end
 end

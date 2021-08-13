@@ -9,7 +9,7 @@ module SessionsHelper
       @current_user ||= User.find_by(id: user_id)
     elsif (user_id = cookies.signed[:user_id])
       user = User.find_by(id: user_id)
-      if user&.authenticate?(cookies.signed[:remember_token])
+      if user&.authenticate?(cookies[:remember_token])
         log_in user
         @current_user = user
       end
@@ -39,21 +39,6 @@ module SessionsHelper
     user.forget
     cookies.delete(:user_id)
     cookies.delete(:remember_token)
-  end
-
-  # 永続セッションを保持している場合、ログインする
-  # before_action
-  # application_controller.rb
-  def auto_login
-    if (user_id = cookies.signed[:user_id])
-      user = User.find_by(id: user_id)
-      if user&.authenticate?(cookies[:remember_token])
-        log_in user
-        redirect_to user
-      else
-        redirect_to login_path
-      end
-    end
   end
 
 end
