@@ -12,7 +12,9 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  validates :password,  presence: true,
+                        length: { minimum: 6 },
+                        allow_nil: true
 
   # 渡された文字列をハッシュ値で返す
   def User.digest(string)
