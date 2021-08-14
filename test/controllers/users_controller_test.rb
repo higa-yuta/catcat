@@ -43,5 +43,20 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not flash.empty?
     assert_redirected_to login_path
   end
+
+  test "should delete destroy" do
+    log_in_as(@user)
+    assert_difference "User.count", -1 do
+      delete user_path(@user)
+    end
+    assert_not flash.empty?
+    assert_redirected_to root_path
+  end
+
+  test "should rediirect destroy when not logged in" do
+    delete user_path(@user)
+    assert_not flash.empty?
+    assert_redirected_to login_path
+  end
   
 end
