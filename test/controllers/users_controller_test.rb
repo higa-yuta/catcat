@@ -13,6 +13,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_template 'users/new'
   end
 
+#create
+  test "should post create" do
+    assert_difference "User.count", 1 do
+      post users_path, params: { user: { name: "日本　太郎",
+                                      email: "japan@gmail.com",
+                                      password: 'password',
+                                      password_confirmation: 'password'}}
+    end
+  end
+
 #show
   test "should get show when logged in" do
     log_in_as(@user)
@@ -26,6 +36,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_path
   end
 
+  test "should redirect show when logged in as wrong user" do
+    log_in_as(@other_user)
+    get user_path(@user)
+    assert flash.empty?
+    assert_redirected_to root_path
+  end
+
 #edit
   test "should get edit when logged in" do
     log_in_as(@user)
@@ -37,6 +54,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get edit_user_path(@user)
     assert_not flash.empty?
     assert_redirected_to login_path
+  end
+
+  test "should redirect edit when logged in as wrong user" do
+    log_in_as(@other_user)
+    get edit_user_path(@user)
+    assert flash.empty?
+    assert_redirected_to root_path
   end
 
 #update
@@ -58,6 +82,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_path
   end
 
+  test "should redirect update when logged in as worng user" do
+    log_in_as(@other_user)
+    patch user_path(@other_user), params: { user: { name: "沖縄　次郎",
+                                                    email: "okinawa-jiro@gmail.com"}}
+    assert flash.empty?
+    assert_redirected_to root_path
+  end
+
 #destroy
   test "should delete destroy" do
     log_in_as(@user)
@@ -72,6 +104,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     delete user_path(@user)
     assert_not flash.empty?
     assert_redirected_to login_path
+  end
+
+  test "should redirect destroy when logged in as wrong user" do
+    log_in_as(@other_user)
+    assert_no_difference "User.count" do
+      delete user_path(@user)
+    end
+    assert_not flash.empty?
+    assert_redirected_to root_path
   end
   
 end
