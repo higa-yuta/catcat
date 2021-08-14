@@ -3,3 +3,8 @@ okinawa:
   email: okinawa@gmail.com
   password_digest: <%= User.digest('password') %>
   admin: true
+
+tokyo:
+  name: 東京　太郎
+  email: tokyo@gmail.com
+  password_digest: <%= User.digest('password') %>
