@@ -84,8 +84,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should redirect update when logged in as worng user" do
     log_in_as(@other_user)
-    patch user_path(@other_user), params: { user: { name: "沖縄　次郎",
-                                                    email: "okinawa-jiro@gmail.com"}}
+    patch user_path(@user), params: { user: { name: "沖縄　次郎",
+                                              email: "okinawa-jiro@gmail.com"}}
     assert flash.empty?
     assert_redirected_to root_path
   end
@@ -111,7 +111,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference "User.count" do
       delete user_path(@user)
     end
-    assert_not flash.empty?
+    assert flash.empty?
     assert_redirected_to root_path
   end
   
