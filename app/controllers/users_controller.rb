@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     end
   end
 
-  
+
   private
     def user_params
       params.require(:user).permit( :name, :email, :password,
@@ -58,6 +58,6 @@ class UsersController < ApplicationController
     #　正しいユーザーの確認
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_path) unless @user == current_user
+      redirect_to(root_path) unless current_user?(@user)
     end
 end
