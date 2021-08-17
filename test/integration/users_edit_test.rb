@@ -35,4 +35,24 @@ class UsersEdtiTest < ActionDispatch::IntegrationTest
     assert_not_empty flash
     assert_redirected_to user_path(@user)
   end
+
+
+  test "successful edit with friendly forwarding" do
+    get edit_user_path(@user)
+    assert_equal session[:forwarding_url], edit_user_url(@user)
+    log_in_as(@user)
+    assert_nil session[:forwarding_url]
+    assert_redirected_to edit_user_path(@user)
+    name = "沖縄　次郎"
+    email = "okinawa-jiro@gmail.com"
+    patch user_path(@user), params: { user: { name: name,
+                                              email: email,
+                                              password: '',
+                                              password_confirmation: ''} }
+    assert_not flash.empty?
+    assert_redirected_to user_path(@user)
+    @user.reload
+    assert_equal @user.name, name
+    assert_equal @user.email, email
+  end
 end

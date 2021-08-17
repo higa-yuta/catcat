@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     if @user&.authenticate(session_params[:password])
       log_in @user
       session_params[:remember_me] == "1" ? remember(@user) : forget(@user)
-      redirect_to @user
+      redirect_back_or(@user)
     else
       flash.now[:danger] = "正しくないメールアドレス/パスワードが入力されています。"
       render 'new'
@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
   
-  
+
   private
     def session_params
       params.require(:session).permit(:email, :password, :remember_me)
