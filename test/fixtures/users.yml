@@ -8,3 +8,14 @@ tokyo:
   name: 東京　太郎
   email: tokyo@gmail.com
   password_digest: <%= User.digest('password') %>
+
+osaka:
+  name: 大阪　太郎
+  email: osaka@gmail.com
+  password_digest: <%= User.digest('password') %>
+
+fukuoka:
+  name: 福岡　太郎
+  email: fukuoka@gmail.com
+  password_digest: <%= User.digest('password') %>
+

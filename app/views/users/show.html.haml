@@ -1,3 +1,4 @@
 - provide(:title, "マイページ")
 = link_to 'ユーザー登録情報を編集する', edit_user_path(current_user), class: "nav-link"
 = simple_format(@user.name)
+= link_to 'ユーザー情報を削除する', user_path(current_user), method: :delete, class: 'nav-link', data: {confirm: "本当に削除しますか?"}
